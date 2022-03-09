@@ -82,7 +82,14 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.first() # 返回所有数据的第一条数据
+    print (books)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    books = models.Book.objects.last() # 返回所有数据的最后一条数据
     print (books)
     return HttpResponse("<p>查找成功！</p>")
