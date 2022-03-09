@@ -7,9 +7,10 @@
 #!/bin/sh 
 django-admin startproject HelloWorld
 django-admin startapp TestModel
-#create table
+#create system table
 python3 manage.py migrate   # 创建表结构
 
+#更新model，需要运行下列命令。
 python3 manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更
 python3 manage.py migrate TestModel   # 创建表结构
 
