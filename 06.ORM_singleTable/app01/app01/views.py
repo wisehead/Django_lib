@@ -34,9 +34,7 @@ def add_book(request):
     for i in books:
         print(i.title)
     return HttpResponse("<p>查找成功！</p>")
-"""
 
-"""
 def add_book(request):
     books = models.Book.objects.exclude(pk=5)
     print(books)
@@ -46,9 +44,7 @@ def add_book(request):
     for i in books:
         print(i.title)
     return HttpResponse("<p>查找成功！</p>")
-"""
 
-"""
 def add_book(request):
     books = models.Book.objects.get(pk=1)
     #books = models.Book.objects.get(pk=18)  # 报错，没有符合条件的对象
@@ -57,11 +53,21 @@ def add_book(request):
     print(books.title)
     return HttpResponse("<p>查找成功！</p>")
 """
+
+"""
 def add_book(request):
     books = models.Book.objects.order_by("price") # 查询所有，按照价格升序排列
     for i in books:
         print(i.title)
     books = models.Book.objects.order_by("-price") # 查询所有，按照价格降序排列
+    for i in books:
+        print(i.title)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    # 按照价格升序排列：降序再反转
+    books = models.Book.objects.order_by("-price").reverse()
     for i in books:
         print(i.title)
     return HttpResponse("<p>查找成功！</p>")
