@@ -1,3 +1,7 @@
-{% for i in views_list %}
-{{ i }}
-{% endfor %}
+{% load my_tags %}
+<link rel="stylesheet" href="/static/plugins/bootstrap/dist/css/bootstrap.css">
+{% load static %}
+{{name}}<img src="{% static 'images/runoob-logo.png' %}" alt="runoob-logo">
+{{ 11|my_filter:22 }}
+{% my_tag1 11 22 33 %}
+{% my_html "zzz" "xxx" %}
