@@ -96,6 +96,7 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.exists()
     print (books)
@@ -106,3 +107,11 @@ def add_book(request):
     #books = models.Book.objects.first().exists()
     print (books)
     return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    # 查询所有的id字段和price字段的数据
+    books = models.Book.objects.values("pk","price")
+    print(books[0]["price"],type(books)) # 得到的是第一条记录的price字段的数据
+    return HttpResponse("<p>查找成功！</p>")
+
