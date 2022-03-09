@@ -26,9 +26,8 @@ def runoob(request):
 """
 
 def runoob(request):
-    import datetime
-    now  =datetime.datetime.now()
-    return render(request, "runoob.html", {"time": now})
+    views_str = "菜鸟教程"
+    return render(request, "runoob.html", {"views_str": views_str})
 
 def hello(request):
     return HttpResponse("Hello world ! ")
