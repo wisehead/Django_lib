@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path 
 
-from . import views,testdb
+from . import views,testdb,search
 
 """
 urlpatterns = [
@@ -28,5 +28,7 @@ urlpatterns = [
     path('runoob/', views.runoob),
     path(r'', views.hello),
     path('testdb/', testdb.testdb),
+    path('search-form', search.search_form),
+    path('search', search.search),
 ]
 
