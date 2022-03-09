@@ -26,8 +26,8 @@ def runoob(request):
 """
 
 def runoob(request):
-    views_num = 88
-    return render(request, "runoob.html", {"num": views_num})
+    views_list = ["菜鸟教程","菜鸟教程1","菜鸟教程2","菜鸟教程3",]
+    return render(request, "runoob.html", {"views_list": views_list})
 
 def hello(request):
     return HttpResponse("Hello world ! ")
