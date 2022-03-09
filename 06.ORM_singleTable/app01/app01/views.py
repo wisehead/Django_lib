@@ -24,11 +24,23 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.filter(pk=5)
     print(books)
     print("//////////////////////////////////////")
     books = models.Book.objects.filter(publish='菜鸟出版社', price=300)
+    print(books, type(books))  # QuerySet类型，类似于list。
+    for i in books:
+        print(i.title)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    books = models.Book.objects.exclude(pk=5)
+    print(books)
+    print("//////////////////////////////////////")
+    books = models.Book.objects.exclude(publish='菜鸟出版社', price=300)
     print(books, type(books))  # QuerySet类型，类似于list。
     for i in books:
         print(i.title)
