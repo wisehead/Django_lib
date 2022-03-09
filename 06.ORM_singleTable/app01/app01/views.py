@@ -48,10 +48,20 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.get(pk=1)
     #books = models.Book.objects.get(pk=18)  # 报错，没有符合条件的对象
     #books = models.Book.objects.get(price=200)  # 报错，符合条件的对象超过一个
     print(books, type(books))  # 模型类的对象
     print(books.title)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+def add_book(request):
+    books = models.Book.objects.order_by("price") # 查询所有，按照价格升序排列
+    for i in books:
+        print(i.title)
+    books = models.Book.objects.order_by("-price") # 查询所有，按照价格降序排列
+    for i in books:
+        print(i.title)
     return HttpResponse("<p>查找成功！</p>")
