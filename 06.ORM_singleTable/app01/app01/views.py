@@ -126,6 +126,7 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 from django.shortcuts import render,HttpResponse
 from app01 import models
 def add_book(request):
@@ -133,5 +134,12 @@ def add_book(request):
     books = models.Book.objects.values_list("publish").distinct() # 对模型类的对象去重没有意义，因为每个对象都是一个不一样的存在。
     print(books)
     books = models.Book.objects.distinct()
+    print(books)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    # 查询价格为200或者300的数据
+    books = models.Book.objects.filter(price__in=[200,300])
     print(books)
     return HttpResponse("<p>查找成功！</p>")
