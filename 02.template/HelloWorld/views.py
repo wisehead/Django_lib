@@ -26,8 +26,8 @@ def runoob(request):
 """
 
 def runoob(request):
-    name ="菜鸟教程"
-    return render(request, "runoob.html", {"name": name})
- 
+    num=1024
+    return render(request, "runoob.html", {"num": num})
+
 def hello(request):
     return HttpResponse("Hello world ! ")
