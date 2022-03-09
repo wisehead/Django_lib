@@ -89,7 +89,20 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.last() # 返回所有数据的最后一条数据
+    print (books)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    books = models.Book.objects.exists()
+    print (books)
+    # 报错，判断的数据类型只能为QuerySet类型数据，不能为整型
+    #books = models.Book.objects.count().exists()
+    print (books)
+    # 报错，判断的数据类型只能为QuerySet类型数据，不能为模型类对象
+    #books = models.Book.objects.first().exists()
     print (books)
     return HttpResponse("<p>查找成功！</p>")
