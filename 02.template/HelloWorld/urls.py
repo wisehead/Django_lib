@@ -27,6 +27,5 @@ urlpatterns = [
     path('hello/', views.hello),
     path('runoob/', views.runoob),
     path(r'', views.hello),
-    path(r'^$', views.hello),
 ]
 
