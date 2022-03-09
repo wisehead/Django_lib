@@ -15,19 +15,21 @@ def add_book(request):
     return HttpResponse("<p>数据添加成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.all()
     #print(books,type(books)) # QuerySet类型，类似于list，访问 url 时数据显示在命令行窗口中。
     for i in books:
         print(i.title)
     return HttpResponse("<p>查找成功！</p>")
-
 """
+
 def add_book(request):
     books = models.Book.objects.filter(pk=5)
     print(books)
     print("//////////////////////////////////////")
     books = models.Book.objects.filter(publish='菜鸟出版社', price=300)
     print(books, type(books))  # QuerySet类型，类似于list。
+    for i in books:
+        print(i.title)
     return HttpResponse("<p>查找成功！</p>")
-"""
