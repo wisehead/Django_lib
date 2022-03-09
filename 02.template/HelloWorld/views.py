@@ -26,8 +26,9 @@ def runoob(request):
 """
 
 def runoob(request):
-    num=1024
-    return render(request, "runoob.html", {"num": num})
+    import datetime
+    now  =datetime.datetime.now()
+    return render(request, "runoob.html", {"time": now})
 
 def hello(request):
     return HttpResponse("Hello world ! ")
