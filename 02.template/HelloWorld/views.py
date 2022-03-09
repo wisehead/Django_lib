@@ -19,9 +19,15 @@ def runoob(request):
     return render(request, "runoob.html", {"views_list": views_list})
 """
 
+"""
 def runoob(request):
     views_dict = {"name":"菜鸟教程"}
     return render(request, "runoob.html", {"views_dict": views_dict})
+"""
+
+def runoob(request):
+    name ="菜鸟教程"
+    return render(request, "runoob.html", {"name": name})
  
 def hello(request):
     return HttpResponse("Hello world ! ")
