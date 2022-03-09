@@ -65,9 +65,17 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     # 按照价格升序排列：降序再反转
     books = models.Book.objects.order_by("-price").reverse()
     for i in books:
         print(i.title)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    books = models.Book.objects.count() # 查询所有数据的数量
+    books = models.Book.objects.filter(price=200).count() # 查询符合条件数据的数量
+    print (books)
     return HttpResponse("<p>查找成功！</p>")
