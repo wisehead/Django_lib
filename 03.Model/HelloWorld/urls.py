@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path 
 
-from . import views
+from . import views,testdb
 
 """
 urlpatterns = [
@@ -27,5 +27,6 @@ urlpatterns = [
     path('hello/', views.hello),
     path('runoob/', views.runoob),
     path(r'', views.hello),
+    path('testdb/', testdb.testdb),
 ]
 
