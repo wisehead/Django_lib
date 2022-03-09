@@ -109,9 +109,29 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     # 查询所有的id字段和price字段的数据
     books = models.Book.objects.values("pk","price")
     print(books[0]["price"],type(books)) # 得到的是第一条记录的price字段的数据
     return HttpResponse("<p>查找成功！</p>")
+"""
 
+"""
+def add_book(request):
+    # 查询所有的price字段和publish字段的数据
+    books = models.Book.objects.values_list("price","publish")
+    print(books)
+    print(books[0][0],type(books)) # 得到的是第一条记录的price字段的数据
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+from django.shortcuts import render,HttpResponse
+from app01 import models
+def add_book(request):
+    # 查询一共有多少个出版社
+    books = models.Book.objects.values_list("publish").distinct() # 对模型类的对象去重没有意义，因为每个对象都是一个不一样的存在。
+    print(books)
+    books = models.Book.objects.distinct()
+    print(books)
+    return HttpResponse("<p>查找成功！</p>")
