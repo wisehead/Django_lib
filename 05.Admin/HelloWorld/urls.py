@@ -13,7 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path 
+from django.urls import path, re_path
+from django.contrib import admin
 
 from . import views,testdb,search,search2
 
@@ -31,5 +32,6 @@ urlpatterns = [
     path('search-form/', search.search_form),
     path('search/', search.search),
     path('search_post/', search2.search_post),
+    re_path(r'^admin/', admin.site.urls),
 ]
 
