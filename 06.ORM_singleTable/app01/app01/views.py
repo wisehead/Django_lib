@@ -74,8 +74,15 @@ def add_book(request):
     return HttpResponse("<p>查找成功！</p>")
 """
 
+"""
 def add_book(request):
     books = models.Book.objects.count() # 查询所有数据的数量
     books = models.Book.objects.filter(price=200).count() # 查询符合条件数据的数量
+    print (books)
+    return HttpResponse("<p>查找成功！</p>")
+"""
+
+def add_book(request):
+    books = models.Book.objects.first() # 返回所有数据的第一条数据
     print (books)
     return HttpResponse("<p>查找成功！</p>")
