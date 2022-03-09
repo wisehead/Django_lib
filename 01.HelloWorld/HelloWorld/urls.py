@@ -25,4 +25,6 @@ urlpatterns = [
 
 urlpatterns = [
     path('hello/', views.hello),
+    path(r'^$', views.hello),
+    path(r'', views.hello),
 ]
