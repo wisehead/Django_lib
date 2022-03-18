@@ -27,7 +27,21 @@ class CustomRegisterView(RegisterView):
 
 ```
 create
---
+--RegisterView.perform_create
+--CustomRegisterSerializer.save
+----adapter = get_adapter()
+------self._setting("ADAPTER", "allauth.account.adapter.DefaultAccountAdapter")
+----DefaultAccountAdapter.new_user
+------django_apps.get_model(settings.AUTH_USER_MODEL, require_ready=False)//AUTH_USER_MODEL = "users.CustomUser"
+----CustomRegisterSerializer.get_cleaned_data
+------RegisterSerializer.get_cleaned_data
+--------return {
+            'username': self.validated_data.get('username', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'email': self.validated_data.get('email', '')
+        }
+----------BaseSerializer.validated_data
+------------self.run_validation(self.initial_data)        
 ```
 
 ###(2) class CustomRegisterSerializer(RegisterSerializer)
