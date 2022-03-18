@@ -32,6 +32,15 @@ create
 
 ###(2) class CustomRegisterSerializer(RegisterSerializer)
 
-```python
+```
+save
+--adapter = get_adapter()
+--user = adapter.new_user(request)
+----get_user_model
+------django_apps.get_model(settings.AUTH_USER_MODEL, require_ready=False)//AUTH_USER_MODEL = "users.CustomUser"
+--adapter.save_user(request, user, self)
+----user.save()
+--self.custom_signup(request, user)
+--setup_user_email(request, user, [])
 
 ```
