@@ -1,6 +1,6 @@
-#1.registration
+#registration
 
-###(1) class CustomRegisterView
+#1. class CustomRegisterView
 
 ```python
 class CustomRegisterView(RegisterView):
@@ -25,6 +25,7 @@ class CustomRegisterView(RegisterView):
         )
 ```
 
+##1.1 create
 ```
 create
 --RegisterView.perform_create
@@ -41,10 +42,48 @@ create
             'email': self.validated_data.get('email', '')
         }
 ----------BaseSerializer.validated_data
-------------self.run_validation(self.initial_data)        
+------------self.run_validation(self.initial_data)
+----if self.cleaned_data["is_company_admin"]:
+------companies = Company.objects.all()
+------for company in companies:
+--------if self.validated_data.get("admin_id", "") == str(company.admin_id):
+----DefaultAccountAdapter.save_user
+------user.save() //users.CustomUser
+----setup_user_email(request, user, [])
+----roles = Role.objects.all()
+----self.invite_code = Code.objects.filter(code=self.cleaned_data["code"]).first()
+----if self.is_private_user and not self.is_company_employee:
+------if self.no_code:
+--------customer = Customer.objects.create(
+                    user=user,
+                    free_workouts_left=settings.NUM_FREE_WORKOUTS,
+                )
+------elif self.is_new_code:
 ```
 
-###(2) class CustomRegisterSerializer(RegisterSerializer)
+##1.2 validate_code
+
+```
+validate_code
+--if code == None or code == "":
+----self.is_private_user = True           
+----self.is_company_employee = False      
+----self.is_new_code = False              
+----self.no_code = True                   
+----return code                           
+--else
+----invite_code = Code.objects.filter(code=code).first()
+----if (hasattr(invite_code, "linked_company") and not invite_code.linked_company is None):
+------self.is_company_employee = True
+----else
+------self.is_company_employee = False
+----self.is_private_user = True
+----self.is_new_code = True
+----self.no_code = False
+```
+
+
+#2 class CustomRegisterSerializer(RegisterSerializer)
 
 ```
 save
