@@ -53,12 +53,49 @@ create
 ----roles = Role.objects.all()
 ----self.invite_code = Code.objects.filter(code=self.cleaned_data["code"]).first()
 ----if self.is_private_user and not self.is_company_employee:
-------if self.no_code:
+------if self.no_code://注册未指定code
 --------customer = Customer.objects.create(
                     user=user,
                     free_workouts_left=settings.NUM_FREE_WORKOUTS,
                 )
-------elif self.is_new_code:
+------elif self.is_new_code://注册指定code
+--------customer = Customer.objects.create(
+                    user=user,
+                    invite_code=self.invite_code,
+                    customer_category=self.invite_code.customer_category,
+                    free_workouts_left=self.invite_code.free_workouts,
+                )
+--------if not self.invite_code.linked_product == None:
+----------order = Order.objects.create(
+                        customer=customer,
+                        product=self.invite_code.linked_product,
+                        expires=timezone.now()
+                        + relativedelta(months=self.invite_code.free_months),
+                        completed=True,
+                    )
+----------order.save()
+--------user.roles.add(2)
+--------customer.save()
+----if self.is_company_employee and self.is_private_user:
+------company = self.invite_code.linked_company
+------customer = Customer.objects.create(
+                user=user,
+                invite_code=self.invite_code,
+                customer_category=self.invite_code.customer_category,
+                company_new=company,
+                free_workouts_left=self.invite_code.free_workouts,
+            )
+------order = Order.objects.create(
+                customer=customer,
+                product=self.invite_code.linked_product,
+                expires=timezone.now()
+                + relativedelta(months=self.invite_code.free_months),
+                completed=True,
+            )
+------customer.save()
+------order.save()
+----if self.cleaned_data["is_company_admin"]:
+------user.roles.add(4)
 ```
 
 ##1.2 validate_code
