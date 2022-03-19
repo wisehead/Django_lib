@@ -24,11 +24,30 @@ class CustomRegisterView(RegisterView):
             headers=headers,
         )
 ```
-
 ##1.1 create
+
 ```
 create
 --RegisterView.perform_create
+----CustomRegisterSerializer.save
+----complete_signup
+------signals.user_signed_up.send()
+------perform_login
+--------DefaultAccountAdapter.pre_login
+----------if not user.is_active://未激活？？？
+------------return self.respond_user_inactive(request, user)
+----------has_verified_email
+------------emailaddress = EmailAddress.objects.get_for_user(user, email)
+------------ret = emailaddress.verified
+----------send_email_confirmation
+----------return self.respond_email_verification_sent(request, user)
+--------adapter.login(request, user)//DefaultAccountAdapter.login
+```
+
+##1.2 RegisterView.perform_create
+```
+
+RegisterView.perform_create
 --CustomRegisterSerializer.save
 ----adapter = get_adapter()
 ------self._setting("ADAPTER", "allauth.account.adapter.DefaultAccountAdapter")
