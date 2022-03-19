@@ -117,7 +117,7 @@ RegisterView.perform_create
 ------user.roles.add(4)
 ```
 
-##1.2 validate_code
+##1.3 validate_code
 
 ```
 validate_code
@@ -136,6 +136,46 @@ validate_code
 ----self.is_private_user = True
 ----self.is_new_code = True
 ----self.no_code = False
+```
+
+##1.4 send_email_confirmation
+```
+send_email_confirmation
+--adapter = get_adapter(request)
+--email_address = EmailAddress.objects.get_for_user(user, email)
+--send_email = adapter.should_send_confirmation_mail(request, email_address)
+--email_address.send_confirmation(request, signup=signup)//EmailAddress.send_confirmation
+----confirmation = EmailConfirmation.create(self)
+------ key = get_adapter().generate_emailconfirmation_key(email_address.email)
+------return cls._default_manager.create(email_address=email_address, key=key)
+----confirmation.send(request, signup=signup)
+------//get_adapter(request).send_confirmation_mail(request, self, signup)
+------DefaultAccountAdapter. send_confirmation_mail
+--------current_site = get_current_site(request)
+--------activate_url = self.get_email_confirmation_url(request, emailconfirmation)
+--------ctx = {
+            "user": emailconfirmation.email_address.user,
+            "activate_url": activate_url,
+            "current_site": current_site,
+            "key": emailconfirmation.key,
+        }
+--------if signup:
+            email_template = "account/email/email_confirmation_signup"
+        else:
+            email_template = "account/email/email_confirmation"
+--------self.send_mail(email_template, emailconfirmation.email_address.email, ctx)
+----------msg = self.render_mail(template_prefix, email, context)
+----------msg.send()            
+------signals.email_confirmation_sent.send
+--if send_email:
+----adapter.add_message(
+                request,
+                messages.INFO,
+                "account/messages/email_confirmation_sent.txt",
+                {"email": email},
+            )
+--if signup:
+----adapter.stash_user(request, user_pk_to_url_str(user))
 ```
 
 
