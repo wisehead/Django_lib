@@ -16,6 +16,7 @@ post
 ------DefaultAccountAdapter.confirm_email
 ------email_address.verified = True                              
 ------email_address.set_as_primary(conditional=True)             
-------email_address.save()                                       
+------email_address.save()  
+--return Response({'detail': _('ok')}, status=status.HTTP_200_OK)                                     
 ```
 

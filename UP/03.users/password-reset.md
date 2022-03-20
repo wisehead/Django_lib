@@ -1,4 +1,39 @@
-#1.password-reset
+#1.PasswordResetView.post
+
+```
+post
+--serializer.is_valid(raise_exception=True)//PasswordResetSerializer
+----PasswordResetSerializer.validate_email
+------PasswordResetSerializer.password_reset_form_class//return AllAuthPasswordResetForm
+------AllAuthPasswordResetForm.is_valid
+--serializer.save()//PasswordResetSerializer
+----AllAuthPasswordResetForm.save
+------AllAuthPasswordResetForm.get_current_site
+--------return Site.objects.get_current(request)
+--------email = self.cleaned_data['email']
+--------token_generator = kwargs.get('token_generator', default_token_generator)
+--------temp_key = token_generator.make_token(user)
+--------path = reverse(
+                'password_reset_confirm',
+                args=[user_pk_to_url_str(user), temp_key],
+            )
+--------url = build_absolute_uri(None, path)
+--------context = {
+                'current_site': current_site,
+                'user': user,
+                'password_reset_url': url,
+                'request': request,
+            }
+--------get_adapter(request).send_mail(
+                'account/email/password_reset_key', email, context
+            )
+--return Response(
+            {'detail': _('Password reset e-mail has been sent.')},
+            status=status.HTTP_200_OK,
+        )
+```
+
+#2.password-reset class code
 
 ### PasswordResetView
 
