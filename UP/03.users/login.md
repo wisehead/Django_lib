@@ -31,5 +31,9 @@ login
 --self.token = create_token(token_model, self.user, self.serializer)
 --process_login
 ----login//django.contrib.auth
-
+------request.session[SESSION_KEY] = user._meta.pk.value_to_string(user)
+------request.session[BACKEND_SESSION_KEY] = backend
+------request.session[HASH_SESSION_KEY] = session_auth_hash
+------request.user = user
+------rotate_token(request)
 ```
