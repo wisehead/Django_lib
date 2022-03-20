@@ -1,4 +1,25 @@
-#1.password-reset-confirm
+#1. PasswordResetConfirmView.post
+
+```
+post
+--serializer.is_valid(raise_exception=True)//PasswordResetConfirmSerializer
+----PasswordResetConfirmSerializer.validate
+------uid = force_str(uid_decoder(attrs['uid']))
+------self.user = UserModel._default_manager.get(pk=uid)
+------default_token_generator.check_token(self.user, attrs['token']):
+------self.set_password_form = SetPasswordForm(user=self.user, data=attrs,)
+------self.set_password_form.is_valid()
+--serializer.save()//PasswordResetConfirmSerializer.save
+----SetPasswordForm.save
+------password = self.cleaned_data["new_password1"]
+------self.user.set_password(password)
+------self.user.save()
+--return Response(
+            {'detail': _('Password has been reset with the new password.')},
+        )
+```
+
+#2.password-reset-confirm
 
 ###(1) PasswordResetConfirmView
 
